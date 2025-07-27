@@ -8,10 +8,10 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-//@DiscriminatorColumn(name = "TYPE", length = 2, discriminatorType = DiscriminatorType.STRING)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "TYPE", length = 2, discriminatorType = DiscriminatorType.STRING)
 @Data @NoArgsConstructor @AllArgsConstructor
-public abstract class Bankaccount {
+public class Bankaccount {
     @Id
     private String id;
     private double balance;
@@ -20,6 +20,6 @@ public abstract class Bankaccount {
     private AccountStatus status;
     @ManyToOne
     private Customer customer;
-    @OneToMany(mappedBy = "bankaccount")
+    @OneToMany(mappedBy = "bankaccount", fetch = FetchType.EAGER)
     private List<AccountOperation> operations;
 }
