@@ -16,6 +16,7 @@ public class Bankaccount {
     private String id;
     private double balance;
     private Date dateCreation;
+    @Enumerated(EnumType.STRING)
     private AccountStatus status;
     @ManyToOne
     private Customer customer;
