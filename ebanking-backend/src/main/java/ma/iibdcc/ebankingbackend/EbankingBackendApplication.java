@@ -1,14 +1,10 @@
 package ma.iibdcc.ebankingbackend;
 
+import ma.iibdcc.ebankingbackend.dtos.CustomerDTO;
 import ma.iibdcc.ebankingbackend.entities.*;
-import ma.iibdcc.ebankingbackend.enums.AccountStatus;
-import ma.iibdcc.ebankingbackend.enums.OperationType;
 import ma.iibdcc.ebankingbackend.exceptions.BalanceNotSufficentException;
 import ma.iibdcc.ebankingbackend.exceptions.BankAccountNotFoundException;
 import ma.iibdcc.ebankingbackend.exceptions.CustomerNotFoundException;
-import ma.iibdcc.ebankingbackend.repositories.interfaces.IAccountOperationRepository;
-import ma.iibdcc.ebankingbackend.repositories.interfaces.IBankAccountRepository;
-import ma.iibdcc.ebankingbackend.repositories.interfaces.ICustomerRepository;
 import ma.iibdcc.ebankingbackend.services.IBankAccountService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -32,7 +28,7 @@ public class EbankingBackendApplication {
     CommandLineRunner start(IBankAccountService bankAccountService){
         return args -> {
             Stream.of("Abdellah","Amine","Saad").forEach(name-> {
-                Customer customer = new Customer();
+                CustomerDTO customer = new CustomerDTO();
                 customer.setName(name);
                 customer.setEmail(name + "@gmail.com");
                 bankAccountService.saveCustomer(customer);

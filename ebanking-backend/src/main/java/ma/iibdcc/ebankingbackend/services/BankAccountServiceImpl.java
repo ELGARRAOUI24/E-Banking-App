@@ -3,11 +3,13 @@ package ma.iibdcc.ebankingbackend.services;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import ma.iibdcc.ebankingbackend.dtos.CustomerDTO;
 import ma.iibdcc.ebankingbackend.entities.*;
 import ma.iibdcc.ebankingbackend.enums.OperationType;
 import ma.iibdcc.ebankingbackend.exceptions.BalanceNotSufficentException;
 import ma.iibdcc.ebankingbackend.exceptions.BankAccountNotFoundException;
 import ma.iibdcc.ebankingbackend.exceptions.CustomerNotFoundException;
+import ma.iibdcc.ebankingbackend.mappers.BankAccountMapper;
 import ma.iibdcc.ebankingbackend.repositories.interfaces.IAccountOperationRepository;
 import ma.iibdcc.ebankingbackend.repositories.interfaces.IBankAccountRepository;
 import ma.iibdcc.ebankingbackend.repositories.interfaces.ICustomerRepository;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -25,12 +28,14 @@ public class BankAccountServiceImpl implements IBankAccountService {
     private ICustomerRepository customerRepository;
     private IBankAccountRepository bankAccountRepository;
     private IAccountOperationRepository accountOperationRepository;
+    private BankAccountMapper dtoMapper;
 
     @Override
-    public Customer saveCustomer(Customer customer) {
+    public CustomerDTO saveCustomer(CustomerDTO customerDTO) {
         log.info("Saving new Customer");
+        Customer customer = dtoMapper.fromCustomerDTO(customerDTO);
         Customer saveCustomer = customerRepository.save(customer);
-        return saveCustomer;
+        return dtoMapper.fromCustomer(saveCustomer);
     }
 
     @Override
@@ -66,8 +71,12 @@ public class BankAccountServiceImpl implements IBankAccountService {
     }
 
     @Override
-    public List<Customer> listCustomers() {
-        return customerRepository.findAll();
+    public List<CustomerDTO> listCustomers() {
+        List<Customer> customers = customerRepository.findAll();
+        List<CustomerDTO> customerDTOS = customers.stream()
+                .map(cust->dtoMapper.fromCustomer(cust))
+                .collect(Collectors.toList());
+        return customerDTOS;
     }
 
     @Override
@@ -117,4 +126,25 @@ public class BankAccountServiceImpl implements IBankAccountService {
     public List<BankAccount> bankAccountList(){
         return bankAccountRepository.findAll();
     }
+
+    @Override
+    public CustomerDTO getCustomer(Long customerId) throws CustomerNotFoundException {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(()->new CustomerNotFoundException("Customer not found"));
+        return dtoMapper.fromCustomer(customer);
+    }
+
+    @Override
+    public CustomerDTO updateCustomer(CustomerDTO customerDTO) {
+        log.info("update Customer");
+        Customer customer = dtoMapper.fromCustomerDTO(customerDTO);
+        Customer saveCustomer = customerRepository.save(customer);
+        return dtoMapper.fromCustomer(saveCustomer);
+    }
+
+    @Override
+    public void deleteCustomer(Long customerId) {
+        customerRepository.deleteById(customerId);
+    }
+
 }
