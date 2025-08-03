@@ -5,14 +5,12 @@ import ma.iibdcc.ebankingbackend.dtos.AccountOperationDTO;
 import ma.iibdcc.ebankingbackend.dtos.BankAccountDTO;
 import ma.iibdcc.ebankingbackend.exceptions.BankAccountNotFoundException;
 import ma.iibdcc.ebankingbackend.services.IBankAccountService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin("*")
 public class BankAccountRestController {
     private IBankAccountService bankAccountService;
 

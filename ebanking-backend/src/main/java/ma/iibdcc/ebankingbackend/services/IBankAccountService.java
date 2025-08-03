@@ -13,6 +13,7 @@ public interface IBankAccountService {
     CustomerDTO saveCustomer(CustomerDTO customerDTO);
     CustomerDTO updateCustomer(CustomerDTO customerDTO);
     void deleteCustomer(Long customerId);
+    List<CustomerDTO> searchCustomers(String keyword);
 
     BankAccountDTO getBankAccount(String accountId) throws BankAccountNotFoundException;
     List<BankAccountDTO> bankAccountList();
@@ -24,4 +25,4 @@ public interface IBankAccountService {
     void debitAccount(String accountId, double amount, String description) throws BankAccountNotFoundException, BalanceNotSufficentException;
     void creditAccount(String accountId, double amount, String description) throws BankAccountNotFoundException, BalanceNotSufficentException;
     void transfertAccount(String accountIdSource, String accountIdDestination, double amount) throws BankAccountNotFoundException, BalanceNotSufficentException;
-    }
+}
