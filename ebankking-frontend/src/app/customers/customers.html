@@ -1,0 +1,58 @@
+<div class="container mt-2">
+  @if (customers) {
+    <ng-container>
+      <div class="card">
+        <div class="card-header">Customers</div>
+        <div class="card-body">
+          <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchCustomers()">
+            <div class="input-group">
+              <label class="input-group-text">keyword : </label>
+              <input type="text" formControlName="keyword" class="form-control">
+              <button class="btn btn-info">
+                <i class="bi bi-search"></i>
+              </button>
+            </div>
+          </form>
+          <table class="table">
+            <thead>
+            <tr>
+              <th>ID</th><th>Name</th><th>Email</th><th></th><th></th>
+            </tr>
+            </thead>
+            <tbody>
+              @for (c of customers | async; track c.id) {
+                <tr>
+                  <td>{{c.id}}</td>
+                  <td>{{c.name}}</td>
+                  <td>{{c.email}}</td>
+                  <td>
+                    <button (click)="handleDeleteCustomer(c)" class="btn btn-danger">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </td>
+                  <td>
+                    <button (click)="handleCustomerAccounts(c)" class="btn btn-success">
+                      Accounts
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </ng-container>
+  } @else if (errorMessage) {
+    <ng-template class="text-danger">
+      <div class="text-danger">
+        {{errorMessage}}
+      </div>
+    </ng-template>
+  } @else {
+    <ng-container>
+      <div class="text-info">
+        Loading ...
+      </div>
+    </ng-container>
+  }
+</div>
