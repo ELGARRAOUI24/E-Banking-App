@@ -1,13 +1,18 @@
 package ma.iibdcc.ebankingbackend.web;
 
+import ma.iibdcc.ebankingbackend.dtos.DebitCreditDTO;
+import ma.iibdcc.ebankingbackend.dtos.TransfertDTO;
 import ma.iibdcc.ebankingbackend.exceptions.BalanceNotSufficentException;
 import ma.iibdcc.ebankingbackend.exceptions.BankAccountNotFoundException;
 import ma.iibdcc.ebankingbackend.exceptions.CustomerNotFoundException;
 import ma.iibdcc.ebankingbackend.services.IBankAccountService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin("*")
 public class OperationAccountController {
     private IBankAccountService bankAccountService;
 
@@ -26,17 +31,17 @@ public class OperationAccountController {
     }
 
     @PostMapping("/operation/debitaccount")
-    public void debitAccount(String accountId, double amount, String description) throws BankAccountNotFoundException, BalanceNotSufficentException {
-        bankAccountService.debitAccount(accountId, amount, description);
+    public void debitAccount(@RequestBody DebitCreditDTO debitDTO) throws BankAccountNotFoundException, BalanceNotSufficentException {
+        bankAccountService.debitAccount(debitDTO.getAccountId(), debitDTO.getAmount(), debitDTO.getDescription());
     }
 
     @PostMapping("/operation/creditaccount")
-    public void creditAccount(String accountId, double amount, String description) throws BankAccountNotFoundException, BalanceNotSufficentException {
-        bankAccountService.creditAccount(accountId, amount, description);
+    public void creditAccount(@RequestBody DebitCreditDTO debitDTO) throws BankAccountNotFoundException, BalanceNotSufficentException {
+        bankAccountService.creditAccount(debitDTO.getAccountId(), debitDTO.getAmount(), debitDTO.getDescription());
     }
 
     @PostMapping("/operation/transfertaccount")
-    public void transfertAccount(String accountIdSource, String accountIdDestination, double amount) throws BankAccountNotFoundException, BalanceNotSufficentException {
-        bankAccountService.transfertAccount(accountIdSource, accountIdDestination, amount);
+    public void transfertAccount(@RequestBody TransfertDTO transfertDTO) throws BankAccountNotFoundException, BalanceNotSufficentException {
+        bankAccountService.transfertAccount(transfertDTO.getAccountIdSource(), transfertDTO.getAccountIdDestination(), transfertDTO.getAmount());
     }
 }
