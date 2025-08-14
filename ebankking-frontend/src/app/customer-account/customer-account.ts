@@ -39,6 +39,6 @@ export class CustomerAccount {
 
   handleAccount(id: string) {
     console.log("test");
-    this.router.navigateByUrl("/accounts/"+id);
+    this.router.navigateByUrl("/admin/accounts/"+id);
   }
 }

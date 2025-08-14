@@ -5,6 +5,7 @@ import {AccountModel} from '../models/account';
 import {AsyncPipe, CommonModule} from '@angular/common';
 import {catchError, Observable, throwError} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
+import {AuthService} from '../services/auth';
 
 @Component({
   selector: 'app-accounts',
@@ -24,7 +25,10 @@ export class Accounts {
   accountObservable!: Observable<AccountModel>;
   operationFormGroup!: FormGroup;
   errorMessage! : string;
-  constructor(private accounSerivce: AccountService, private fb:FormBuilder, private route: ActivatedRoute,) { }
+  constructor(private accounSerivce: AccountService,
+              private fb:FormBuilder,
+              private route: ActivatedRoute,
+              public authService : AuthService) { }
 
   ngOnInit(): void {
     this.searchFormGroup = this.fb.group({

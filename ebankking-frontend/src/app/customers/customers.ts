@@ -19,7 +19,8 @@ export class Customers implements OnInit {
   customers! : Observable<Array<CustomerModel>>;
   errorMessage! : string;
   searchFormGroup! : FormGroup;
-  constructor(private customerService : CustomerService, private fb:FormBuilder, private router:Router) { }
+
+  constructor(private customerService:CustomerService, private fb:FormBuilder, private router:Router) { }
 
   ngOnInit(): void {
     this.searchFormGroup = this.fb.group({
@@ -58,6 +59,6 @@ export class Customers implements OnInit {
   }
 
   handleCustomerAccounts(c: CustomerModel) {
-    this.router.navigateByUrl("/customer-account/"+c.id, {state: c});
+    this.router.navigateByUrl("/admin/customer-account/"+c.id, {state: c});
   }
 }
