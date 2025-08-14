@@ -2,12 +2,14 @@ import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CustomerModel} from '../models/customer';
 import {CustomerService} from '../services/customer';
-import {Router, RouterLink} from '@angular/router';
+import {Router} from '@angular/router';
+import {NgClass} from '@angular/common';
 
 @Component({
   selector: 'app-new-customer',
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgClass
   ],
   templateUrl: './new-customer.html',
   styleUrl: './new-customer.css'

@@ -1,29 +1,36 @@
 <div class="container">
-  <div class="card col-md-6 offset-3 mt-2">
+  <div class="card col-md-6 offset-md-3 mt-4">
     <div class="card-header">
-      New Customer
+      <h5>New Customer</h5>
     </div>
     <div class="card-body">
       <form [formGroup]="newCustomerFormGroup" (ngSubmit)="handleSaveCustomer()">
+        <!-- Name Field -->
         <div class="mb-3">
-          <label class="form-label">Name : </label>
-          <input type="text" formControlName="name" class="form-control">
-          @if (!newCustomerFormGroup.controls['name'].untouched
-              && newCustomerFormGroup.controls['name'].errors
-              && newCustomerFormGroup.controls['name'].errors!['required']) {
-            <span class="text-danger">Name is required!!</span>
+          <label for="name" class="form-label">Name:</label>
+          <input id="name" type="text" formControlName="name" class="form-control"
+                 [ngClass]="{'is-invalid': newCustomerFormGroup.controls['name'].touched && newCustomerFormGroup.controls['name'].invalid}">
+          @if (newCustomerFormGroup.controls['name'].touched &&
+          newCustomerFormGroup.controls['name'].errors?.['required']) {
+            <div class="invalid-feedback">
+              Name is required.
+            </div>
           }
         </div>
         <div class="mb-3">
-          <label class="form-label">Email : </label>
-          <input type="text" formControlName="email" class="form-control">
-          @if (!newCustomerFormGroup.controls['email'].untouched
-          && newCustomerFormGroup.controls['email'].errors
-          && newCustomerFormGroup.controls['email'].errors!['email']) {
-            <span class="text-danger">Email is not valid!!</span>
+          <label for="email" class="form-label">Email:</label>
+          <input id="email" type="email" formControlName="email" class="form-control"
+                 [ngClass]="{'is-invalid': newCustomerFormGroup.controls['email'].touched && newCustomerFormGroup.controls['email'].invalid}">
+          @if (newCustomerFormGroup.controls['email'].touched &&
+          newCustomerFormGroup.controls['email'].errors?.['email']) {
+            <div class="invalid-feedback">
+              Please enter a valid email address.
+            </div>
           }
         </div>
-        <button [disabled]="!newCustomerFormGroup.valid" class="btn btn-info">Save</button>
+        <button type="submit" [disabled]="!newCustomerFormGroup.valid" class="btn btn-info">
+          Save
+        </button>
       </form>
     </div>
   </div>

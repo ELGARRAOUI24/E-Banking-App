@@ -1,38 +1,44 @@
-<div class="container mt-2">
+<div class="container my-4">
   @if (customers) {
-    <ng-container>
-      <div class="card">
-        <div class="card-header">Customers</div>
-        <div class="card-body">
-          <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchCustomers()">
-            <div class="input-group">
-              <label class="input-group-text">keyword : </label>
-              <input type="text" formControlName="keyword" class="form-control">
-              <button class="btn btn-info">
-                <i class="bi bi-search"></i>
-              </button>
-            </div>
-          </form>
-          <table class="table">
-            <thead>
+    <div class="card shadow">
+      <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+        <span>Customers</span>
+        <span class="badge bg-light text-dark">{{ (customers | async)?.length }} found</span>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchCustomers()" class="mb-3">
+          <div class="input-group">
+            <span class="input-group-text">Keyword</span>
+            <input type="text" class="form-control" formControlName="keyword" placeholder="Search by name or email">
+            <button class="btn btn-outline-secondary" type="submit">
+              <i class="bi bi-search"></i>
+            </button>
+          </div>
+        </form>
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover align-middle text-center">
+            <thead class="table-light">
             <tr>
-              <th>ID</th><th>Name</th><th>Email</th><th></th><th></th>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th colspan="2">Actions</th>
             </tr>
             </thead>
             <tbody>
               @for (c of customers | async; track c.id) {
                 <tr>
-                  <td>{{c.id}}</td>
-                  <td>{{c.name}}</td>
-                  <td>{{c.email}}</td>
+                  <td>{{ c.id }}</td>
+                  <td>{{ c.name }}</td>
+                  <td>{{ c.email }}</td>
                   <td>
-                    <button (click)="handleDeleteCustomer(c)" class="btn btn-danger">
-                      <i class="bi bi-trash"></i>
+                    <button class="btn btn-danger btn-sm" (click)="handleDeleteCustomer(c)" title="Delete">
+                      <i class="bi bi-trash-fill"></i>
                     </button>
                   </td>
                   <td>
-                    <button (click)="handleCustomerAccounts(c)" class="btn btn-success">
-                      Accounts
+                    <button class="btn btn-success btn-sm" (click)="handleCustomerAccounts(c)" title="View Accounts">
+                      <i class="bi bi-folder2-open"></i> Accounts
                     </button>
                   </td>
                 </tr>
@@ -41,18 +47,13 @@
           </table>
         </div>
       </div>
-    </ng-container>
+    </div>
   } @else if (errorMessage) {
-    <ng-template class="text-danger">
-      <div class="text-danger">
-        {{errorMessage}}
-      </div>
-    </ng-template>
+    <div class="alert alert-danger mt-3">{{ errorMessage }}</div>
   } @else {
-    <ng-container>
-      <div class="text-info">
-        Loading ...
-      </div>
-    </ng-container>
+    <div class="text-center text-info mt-3">
+      <div class="spinner-border spinner-border-sm" role="status"></div>
+      <span class="ms-2">Loading...</span>
+    </div>
   }
 </div>
