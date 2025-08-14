@@ -4,12 +4,12 @@
 
 ### Exemple de Résultat
 
-![img/Login.png](img/Login.png)
+![imgs/Login.png](imgs/Login.png)
 
-![img/Customers.png](img/Customers.png)
+![imgs/Customers.png](imgs/Customers.png)
 
-![img/Delete.png](img/Delete.png)
+![imgs/Delete.png](imgs/Delete.png)
 
-![img/Accounts.png](img/Accounts.png)
+![imgs/Accounts.png](imgs/Accounts.png)
 
-![img/Operations.png](img/Operations.png)
+![imgs/Operations.png](imgs/Operations.png)
