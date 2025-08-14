@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {CustomerModel} from '../models/customer';
 import {AccountModel} from '../models/account';
+import {BankAccountModel} from '../models/bankAccount';
 
 @Injectable({
   providedIn: 'root'
@@ -30,4 +31,7 @@ export class AccountService {
   }
 
 
+  public getAccountByCustomerId(customerId: number):Observable<Array<BankAccountModel>> {
+    return this.http.get<Array<BankAccountModel>>(this.backendHost+"/listAccountCustomer/"+customerId);
+  }
 }
