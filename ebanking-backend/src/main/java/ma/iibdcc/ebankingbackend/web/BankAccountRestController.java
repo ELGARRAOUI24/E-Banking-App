@@ -1,5 +1,6 @@
 package ma.iibdcc.ebankingbackend.web;
 
+import jakarta.websocket.server.PathParam;
 import ma.iibdcc.ebankingbackend.dtos.AccountHistoryDTO;
 import ma.iibdcc.ebankingbackend.dtos.AccountOperationDTO;
 import ma.iibdcc.ebankingbackend.dtos.BankAccountDTO;
@@ -39,5 +40,10 @@ public class BankAccountRestController {
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "5") int size) throws BankAccountNotFoundException {
         return bankAccountService.getAccountHistory(accountId, page, size);
+    }
+
+    @GetMapping("/listAccountCustomer/{customerId}")
+    public List<BankAccountDTO> getBankAccountsBycustomerId(@PathVariable(name = "customerId") Long customerId) {
+        return bankAccountService.getBankAccountsBycustomerId(customerId);
     }
 }

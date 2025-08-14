@@ -21,7 +21,7 @@ public class EbankingBackendApplication {
     }
 
 
-    @Bean
+    //@Bean
     CommandLineRunner start(IBankAccountService bankAccountService){
         return args -> {
             Stream.of("Abdellah","Amine","Saad").forEach(name-> {

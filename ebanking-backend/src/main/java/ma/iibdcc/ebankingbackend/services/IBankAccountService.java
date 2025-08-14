@@ -25,4 +25,5 @@ public interface IBankAccountService {
     void debitAccount(String accountId, double amount, String description) throws BankAccountNotFoundException, BalanceNotSufficentException;
     void creditAccount(String accountId, double amount, String description) throws BankAccountNotFoundException, BalanceNotSufficentException;
     void transfertAccount(String accountIdSource, String accountIdDestination, double amount) throws BankAccountNotFoundException, BalanceNotSufficentException;
+    List<BankAccountDTO> getBankAccountsBycustomerId(Long customerId);
 }

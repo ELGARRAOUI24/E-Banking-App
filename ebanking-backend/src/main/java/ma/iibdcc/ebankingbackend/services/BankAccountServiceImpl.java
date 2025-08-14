@@ -195,6 +195,20 @@ public class BankAccountServiceImpl implements IBankAccountService {
         creditAccount(accountIdDestination, amount, "Transfert from "+accountIdSource);
     }
 
+    public List<BankAccountDTO> getBankAccountsBycustomerId(Long customerId) {
+        List<BankAccount> bankAccounts = bankAccountRepository.findByCustomer_Id(customerId);
+        List<BankAccountDTO> bankAccountDTOS = bankAccounts.stream().map(bacc -> {
+            if (bacc instanceof CurrentAccount) {
+                return dtoMapper.fromCurrentBankAccount((CurrentAccount) bacc);
+            } else if (bacc instanceof SavingAccount) {
+                return dtoMapper.fromSavingBankAccount((SavingAccount) bacc);
+            }else {
+                return null;
+            }
+        }).collect(Collectors.toList());
+        return bankAccountDTOS;
+    }
+
     private BankAccount getBankAccountById(String accountId) throws BankAccountNotFoundException {
         BankAccount bankAccount = bankAccountRepository.findById(accountId).orElseThrow(()->
                 new BankAccountNotFoundException("BankAccount not found"));
